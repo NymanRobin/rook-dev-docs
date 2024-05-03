@@ -57,9 +57,11 @@ Then use the binary directly when running cluster setup with the following ISO i
 
 ```console
 export MINIKUBE_ISO_URL="https://github.com/irq0/minikube/releases/download/2022-11-08-master%2Bfscrypt-kernel/minikube-amd64.iso"
-./minikube --iso_url=MINIKUBE_ISO_URL ....
 ```
 
+```console
+./minikube --iso_url="${MINIKUBE_ISO_URL}"
+```
 
 ## NOTE
 
