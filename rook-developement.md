@@ -1,6 +1,5 @@
----
-title: Developer Environment
----
+
+# Rook Developer Environment
 
 Documentation is based on offical documentation from the rook project with some more detail
 
@@ -81,6 +80,22 @@ kubectl apply -f deploy/examples/crds.yaml
 
 ### Note
 If you remake the operator the crd changes might be overwritten
+
+### Minikube debug with kvm2
+
+If you see the following permission error
+
+```console
+StartHost failed, but will try again: creating host: create: Error creating machine: Error in driver during machine creation: error creating VM: virError(Code=1, Domain=10, Message='internal error: process exited while connecting to monitor: Could not access KVM kernel module: Permission denied
+2024-04-29T05:37:46.321363Z qemu-system-x86_64: failed to initialize KVM: Permission denied')
+```
+
+Most likely your user is not in the kvm group, try the following to resolve it
+
+```console
+sudo usermod -a -G kvm <username>
+sudo chown root:kvm /dev/kvm
+```
 
 ## Specific Feature Developement
 

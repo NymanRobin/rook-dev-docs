@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  kubernetes: |-
+    {
+      "encryptionKMSType": "metadata",
+      "secretName": "cephfs-encryption-passphrase",
+      "secretNamespace": "rook-ceph"
+    }
+metadata:
+  name: csi-kms-connection-details
+  namespace: rook-ceph
