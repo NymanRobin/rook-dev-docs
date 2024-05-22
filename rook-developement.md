@@ -93,7 +93,7 @@ StartHost failed, but will try again: creating host: create: Error creating mach
 Most likely your user is not in the kvm group, try the following to resolve it
 
 ```console
-sudo usermod -a -G kvm <username>
+sudo usermod -a -G kvm $USER
 sudo chown root:kvm /dev/kvm
 ```
 
