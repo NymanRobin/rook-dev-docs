@@ -61,6 +61,43 @@ docker tag "local/ceph-$(go env GOARCH)" 'rook/ceph:master'
 kubectl delete pod -n rook-ceph -l app=rook-ceph-operator
 ```
 
+## Developing multinode minikube cluster
+
+In case you have a multinode minikube cluster you cannot use the local docker environment
+as trying to assume it will fail with the following.
+
+```console
+ eval $(minikube --profile rook docker-env)
+
+❌  Exiting due to ENV_MULTINODE_CONFLICT: The docker-env command is incompatible with multi-node clusters. Use the 'registry' add-on: https://minikube.sigs.k8s.io/docs/handbook/registry/
+
+```
+
+This can be solved by adding the registry addon as the error message suggests.
+However, the developement flow will change as a consequence of this as you will need to push
+the images through the registry instead. Follow these steps
+
+1) Enable the registry addon for minikube after starting the cluster
+
+```console
+minikube addons enable registry -p rook
+```
+
+2) Find the name for the registry pod and enable port forwarding for it
+
+```console
+kubectl get pods -n kube-system
+kubectl port-forward --namespace kube-system registry-xxxxx 5000:5000
+```
+
+3) Now you can tag and push your image
+
+```console
+docker tag my-app:latest localhost:5000/my-app:latest
+docker push localhost:5000/my-app:latest
+```
+
+
 ## Updating CRDs
 
 Developers can test CRD changes by doing the changes for example in:
